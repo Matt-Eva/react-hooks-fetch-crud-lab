@@ -1,6 +1,6 @@
 import React from "react";
 
-function QuestionItem({ question }) {
+function QuestionItem({ question, onDelete }) {
   const { id, prompt, answers, correctIndex } = question;
 
   const options = answers.map((answer, index) => (
@@ -8,6 +8,14 @@ function QuestionItem({ question }) {
       {answer}
     </option>
   ));
+
+  function clickHandler(){
+    // console.log(id)
+    fetch(`http://localhost:3000/questions/${id}`, {
+      method: "DELETE"
+    })
+    onDelete(id)
+  }
 
   return (
     <li>
@@ -17,7 +25,7 @@ function QuestionItem({ question }) {
         Correct Answer:
         <select defaultValue={correctIndex}>{options}</select>
       </label>
-      <button>Delete Question</button>
+      <button onClick={clickHandler}>Delete Question</button> {/*button for delete*/}
     </li>
   );
 }
